@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio | Gustavo Oliveira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --bg3: #1a1a24;
+      --accent: #7c6af7;
+      --accent2: #4ff5c5;
+      --text: #e8e6f0;
+      --muted: #7a788a;
+      --border: rgba(124, 106, 247, 0.2);
+      --card-bg: rgba(26, 26, 36, 0.8);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(10, 10, 15, 0.85);
+      border-color: var(--border);
+      backdrop-filter: blur(16px);
+    }
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-family: 'Space Mono', monospace;
+    }
+    .nav-links a:hover { color: var(--accent2); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+      opacity: 0.5;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(124,106,247,0.15) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(79,245,197,0.08) 0%, transparent 70%);
+      bottom: 0; left: 10%;
+      pointer-events: none;
+    }
+    .hero-content { position: relative; max-width: 800px; }
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent2);
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: transparent;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.8rem;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #6b59e8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(124, 106, 247, 0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 3rem; }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+    .section-title span { color: var(--accent2); }
+
+    /* ── SOBRE ── */
+    #sobre { background: var(--bg2); }
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .sobre-avatar-wrap { position: relative; }
+    .sobre-avatar {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .sobre-avatar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      border: 1px solid var(--accent);
+      transform: translate(10px, 10px);
+      z-index: -1;
+    }
+    .sobre-text p {
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      line-height: 1.9;
+      font-size: 1.05rem;
+    }
+    .sobre-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .stat-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .stat-card .num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent2);
+      display: block;
+    }
+    .stat-card .label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── CURSOS ── */
+    #cursos { background: var(--bg); }
+    .cursos-grid {
+      display: inline;
+      flex-wrap: wrap-reverse;
+      gap: 1.5rem;
+    }
+    .curso-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+      backdrop-filter: blur(8px);
+    }
+    .curso-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+    .curso-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .curso-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+      backdrop-filter: blur(8px);
+    }
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+    .skill-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .skill-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .skill-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .skill-bar-bg {
+      background: var(--bg);
+      border-radius: 2px;
+      height: 3px;
+      overflow: hidden;
+    }
+    .skill-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .skill-bar.animated { transform: scaleX(1); }
+
+    /* ── PROJETOS ── */
+    #projetos { background: var(--bg2); }
+    .projetos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .projeto-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .projeto-card:hover {
+      border-color: var(--accent2);
+      transform: translateY(-6px);
+    }
+    .projeto-img {
+      width: 100%;
+      height: 200px;
+      background: var(--bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .projeto-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124,106,247,0.1), rgba(79,245,197,0.05));
+    }
+    .projeto-body { padding: 1.4rem; flex: 1; display: flex; flex-direction: column; }
+    .projeto-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem; }
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(124, 106, 247, 0.15);
+      color: var(--accent);
+      border-radius: 2px;
+      border: 1px solid rgba(124, 106, 247, 0.25);
+    }
+    .projeto-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .projeto-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      flex: 1;
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+    .projeto-links { display: flex; gap: 0.75rem; }
+    .projeto-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--accent2);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: opacity 0.2s;
+    }
+    .projeto-link:hover { opacity: 0.7; }
+    .projeto-link svg { width: 14px; height: 14px; }
+
+    /* ── CONTATO ── */
+    #contato { background: var(--bg); position: relative; overflow: hidden; }
+    .contato-glow {
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,106,247,0.1) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .contato-inner { position: relative; max-width: 640px; margin: 0 auto; text-align: center; }
+    .contato-inner p {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-size: 1.05rem;
+    }
+    .social-links { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .social-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    footer span { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 5rem 1.5rem 3rem; }
+      .sobre-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .sobre-stats { grid-template-columns: repeat(3, 1fr); }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor customizado -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Navegação -->
+  <nav id="navbar">
+    <a href="#" class="logo"><span>Portfólio Gusta</span></a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#cursos">Cursos</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="inicio">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-content">
+      <h1>
+        Olá, eu sou<br />
+        <em>Gustavo William</em>
+      </h1>
+      <div class="hero-actions">
+        <a href="#projetos" class="btn btn-primary">Ver projetos →</a>
+        <a href="#contato" class="btn btn-outline">Entrar em contato</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre -->
+  <section id="sobre">
+    <div class="section-label">#Sobre mim</div>
+    <div class="sobre-grid">
+      <div class="sobre-avatar-wrap fade-up">
+        <div class="sobre-avatar">🧑‍💻</div>
+      </div>
+      <div class="fade-up">
+        <h2 class="section-title">Objetivo de <span>Profissional</span></h2>
+        <p>Atuar como Analista de Suporte Júnior ou em áreas relacionadas à análise de dados, contribuindo na resolução de problemas técnicos, suporte a sistemas e apoio à tomada de decisão por meio de dados. </p>
+        <div class="sobre-stats">
+          <div class="stat-card">
+            <span class="num">0</span>
+            <span class="label">Anos de exp.</span>
+          </div>
+          <div class="stat-card">
+            <span class="num">4</span>
+            <span class="label">Projetos</span>
+          </div>
+          <div class="stat-card">
+            <span class="num">10+</span>
+            <span class="label">Tecnologias</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="section-label">#Tecnologias</div>
+    <h2 class="section-title">Minhas <span>skills</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card fade-up">
+        <div class="skill-name">Python</div>
+        <div class="skill-desc">Backend, automação, análise de dados e machine learning.</div>
+        <div class="skill-bar-bg"><div class="skill-bar" style="--w:0.9" data-width="0.9"></div></div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-desc">Desenvolvimento front-end e back-end com Node.js.</div>
+        <div class="skill-bar-bg"><div class="skill-bar" data-width="0.85"></div></div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-name">Banco de Dados</div>
+        <div class="skill-desc">PostgreSQL, MySQL, MongoDB e Redis.</div>
+        <div class="skill-bar-bg"><div class="skill-bar" data-width="0.95"></div></div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-name">HTML & CSS</div>
+        <div class="skill-desc">Interfaces responsivas, animações e design systemas.</div>
+        <div class="skill-bar-bg"><div class="skill-bar" data-width="0.88"></div></div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-name">Golang</div>
+        <div class="skill-desc">Desenvolvimento de APIs, microserviços e automação.</div>
+        <div class="skill-bar-bg"><div class="skill-bar" data-width="0.70"></div></div>
+      </div>
+  </section>
+
+  <!-- Projetos -->
+  <section id="projetos">
+    <div class="section-label">#Portfólio</div>
+    <h2 class="section-title">Projetos <span>recentes</span></h2>
+    <div class="projetos-grid">
+
+      <div class="projeto-card fade-up">
+        <div class="projeto-img">🤖</div>
+        <div class="projeto-body">
+          <div class="projeto-tags">
+            <span class="tag">Python</span>
+            <span class="tag">HTML</span>
+          </div>
+          <h3 class="projeto-title">Projeto para transcrever videos com IA</h3>
+          <p class="projeto-desc">Esse foi um projeto de desenvolvimento de um sistema de transcrição automática de vídeos utilizando tecnologia de processamento de linguagem natural.</p>
+          <div class="projeto-links">
+            <a href="https://github.com/Willia135/Projeto-Transcrever-videos-com-IA" class="projeto-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="projeto-card fade-up">
+        <div class="projeto-img">📃</div>
+        <div class="projeto-body">
+          <div class="projeto-tags">
+            <span class="tag">Python</span>
+            <span class="tag">HTML</span>
+          </div>
+          <h3 class="projeto-title">Lista de tarefas</h3>
+          <p class="projeto-desc">Esse é um projeto para listar e automatizar tarefas por meio do terminal.</p>
+          <div class="projeto-links">
+            <a href="https://github.com/Willia135/Projeto-lista-de-tarefas" class="projeto-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="projeto-card fade-up">
+        <div class="projeto-img">📜</div>
+        <div class="projeto-body">
+          <div class="projeto-tags">
+            <span class="tag">PHP</span>
+            <span class="tag">CSS</span>
+            <span class="tag">HTML</span>
+            <span class="tag">SQL</span>
+          </div>
+          <h3 class="projeto-title">CRUD</h3>
+          <p class="projeto-desc">Sistema de gerenciamento de dados com operações de criação, leitura, atualização e exclusão. Foi utilizado também o MySQL para o armazenamento dos dados.</p>
+          <div class="projeto-links">
+            <a href="https://github.com/Willia135/CRUD" class="projeto-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+  </section>
+
+  <!-- Cursos -->
+<section id="cursos">
+  <div class="section-label">#Cursos</div>
+  <h2 class="section-title">Cursos <span>realizados</span></h2>
+  <div class="cursos-grid">
+     <div class="skill-card fade-up">
+        <div class="skill-name">SQL para análise de dados</div>
+        <div class="skill-desc">Udemy (2026)</div>
+        <div class="skill-bar-bg"><div class="skill-bar" data-width="1.0"></div></div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-name">Imersao dados com Python II</div>
+        <div class="skill-desc">Udemy (2026)</div>
+        <div class="skill-bar-bg"><div class="skill-bar" data-width="1.0"></div></div>
+      </div>
+        <div class="skill-card fade-up">
+        <div class="skill-name">Golang</div>
+        <div class="skill-desc">Udemy(2025)</div>
+        <div class="skill-bar-bg"><div class="skill-bar" data-width="1.0"></div></div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-name">Imersao IA - Google Gemini</div>
+        <div class="skill-desc">Alura(2025)</div>
+        <div class="skill-bar-bg"><div class="skill-bar" data-width="1.0"></div></div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-name">Curso de curta duração em Power BI</div>
+        <div class="skill-desc">SENAI(2024)</div>
+        <div class="skill-bar-bg"><div class="skill-bar" data-width="1.0"></div></div>
+      </div>
+  </div>
+    </section>
+
+  <!-- Contato -->
+  <section id="contato">
+    <div class="contato-glow"></div>
+    <div class="contato-inner fade-up">
+      <div class="section-label" style="text-align:center; display:block;">#Contato</div>
+      <h2 class="section-title" style="font-size: clamp(2rem,4vw,3rem);"> Me encontr no <span>Github</span> e <span>Linkedin</span></h2>
+      <p>Estou aberto a novas oportunidades, freelas e projetos interessantes. Me manda uma mensagem!</p>
+      </a>
+      <div class="social-links">
+        <a href="https://github.com/Willia135" target="_blank" class="social-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/gustavooliveira135" target="_blank" class="social-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="curriculo-gustavo-oliveira.pdf" target="_blank" download class="social-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-6m-2 0h-6m-2 0H2"/>
+            <path d="M5 12l5 5L20 7"/>
+          </svg>
+          Meu Currículo
+        </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span>© 2025 <span>Gustavo William</span></span>
+  </footer>
+
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Animações de entrada
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 100);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Barras de skill animadas
+    const barObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const bar = e.target;
+          const w = bar.dataset.width;
+          bar.style.width = (parseFloat(w) * 100) + '%';
+          bar.classList.add('animated');
+          barObserver.unobserve(bar);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.skill-bar').forEach(b => barObserver.observe(b));
+  </script>
+</body>
+</html>
